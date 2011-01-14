@@ -51,14 +51,14 @@
     (pages/tag-page id :user mw/USER :page-number mw/PAGE-NUMBER))
   (GET ["/tag/:id/:etc" :id #"\d+" :etc #"[^/]*$"] [id]
     (pages/tag-page id :user mw/USER :page-number mw/PAGE-NUMBER))
-  
+
   (GET ["/archives/date"] [] (pages/archives-page-by-date))
   (GET ["/archives/comments"] [] (pages/archives-page-by-comments))
   (GET ["/archives/tag-cloud"] [] (pages/tag-cloud-page))
-  
+
   (GET "/login" []                     (admin/login-page))
   (GET "/logout" []                    (admin/do-logout))
-  
+
   (POST "/comment" {form-params :form-params
                     {referer "referer"} :headers
                     :as request}
@@ -74,11 +74,11 @@
   (GET "/admin/edit-posts" {{:strs [type status]} :query-params}
     (admin/edit-posts-page :page-number mw/PAGE-NUMBER :type type :status status))
   (GET "/admin/edit-post/:id" [id] (admin/edit-post-page id))
-  
+
   (GET "/admin/edit-comments" {{:strs [status]} :query-params}
     (admin/edit-comments-page :page-number mw/PAGE-NUMBER :status status))
   (GET "/admin/edit-comment/:id" [id] (admin/edit-comment-page id))
-  
+
   (GET "/admin/edit-tags" [] (admin/edit-tags-page :page-number mw/PAGE-NUMBER))
   (GET "/admin/edit-tag/:id" [id] (admin/edit-tag-page id))
   (GET "/admin/edit-categories" [] (admin/edit-categories-page :page-number mw/PAGE-NUMBER))
@@ -113,7 +113,7 @@
   (POST "/admin/merge-tags" {{:strs [from_id to_id]} :form-params}
     (admin/do-merge-tags from_id to_id))
 
-  (POST "/admin/edit-categpru" {{:strs [id title url]} :form-params}
+  (POST "/admin/edit-category" {{:strs [id title url]} :form-params}
     (admin/do-edit-category id title url))
   (POST "/admin/add-category" {{:strs [title url]} :form-params}
     (admin/do-add-category title url))
@@ -173,4 +173,4 @@
   way to stop Jetty once you start it."
   []
   (future
-   (jetty/run-jetty (var all-routes) {:port 8080})))
+   (jetty/run-jetty (var all-routes) {:port 8001})))

@@ -3,20 +3,21 @@
 
 (def DEBUG false)
 
-(def SITE-TITLE "A Clojure Blog (\u03bb)")
-(def SITE-URL "http://localhost:8080")
-(def SITE-DESCRIPTION "Some guy's blog about Clojure.")
+(def SITE-TITLE "Yaroslav Luzin himself")
+(def SITE-TITLE-ADDITIONAL "aka @jardev")
+(def SITE-DESCRIPTION "Clojure. Software development. Project management")
+(def SITE-URL "http://localhost:8001")
 
 (def PUBLIC-DIR "public")  ;;CS/JS/images live here.  Relative path.
 (def TIME-ZONE "Canada/Pacific")
 (def TIME-FORMAT "MMMM dd, yyyy @ h:mm a z")
 
 ;; Change this.
-(def PASSWORD-SALT "K@#$J@$#(FJ@#!$M@#n1NELKDwdjf9wef123krJ@!FKnjef2i#JR@R")
+(def PASSWORD-SALT "K@#$J@$#(FJ@#!$M@#n2NELKDwdjf9baf1_3krJ@!FKnjef7i#JR@R")
 
-(def DEFAULT-COMMENT-AUTHOR "Anonymous Cow")
+(def DEFAULT-COMMENT-AUTHOR "Anonymous")
 
-(def POSTS-PER-PAGE 10)
+(def POSTS-PER-PAGE 13)
 (defn page-offset [page-number]
   (* (dec page-number) POSTS-PER-PAGE))
 
@@ -27,9 +28,9 @@
 
 (def DB nil)
 
-(def DB (pg/postgres-pool {:database "blogtest"
-                           :username "blogtest"
-                           :password "blogtest"}))
+(def DB (pg/postgres-pool {:database "blog"
+                           :username "blog"
+                           :password "qwertyuiop"}))
 
 ;; Pick a DB...
 (comment

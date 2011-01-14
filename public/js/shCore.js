@@ -58,7 +58,7 @@ var sh = {
 		'tab-size' : 4,
 		
 		/** Enables or disables gutter. */
-		'gutter' : false,
+		'gutter' : true,
 		
 		/** Enables or disables toolbar. */
 		'toolbar' : false,

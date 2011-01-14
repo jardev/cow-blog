@@ -42,7 +42,7 @@
   "Log a user in, if username/pw are OK."
   [username password]
   (if-let [user (db/check-user username password)]
-    (do (session/session-put! :user user) 
+    (do (session/session-put! :user user)
         (flash/message (str "Welcome back, " username "."))
         (response/redirect "/admin"))
     (do (flash/error (str "Login failed."))
@@ -58,7 +58,7 @@
            [:li (link-to "/admin/add-post" "Write a new Post")]]
           [:ul [:h4 "Manage"]
            [:li (link-to "/admin/edit-posts" "Posts (Edit / Delete)")]
-           [:ul 
+           [:ul
             [:li (link-to "/admin/edit-posts?status=draft" "Drafts")]
             [:li (link-to "/admin/edit-posts?type=toplevel" "Toplevel Pages")]
             [:li (link-to "/admin/edit-posts?type=page" "Pages")]]
@@ -396,15 +396,17 @@
   (let [tag {:title title :url url}]
    (or (validate-tag-category "/admin" tag)
        (do
-         (error/with-err-str (oyako/insert :tags ))
+         (error/with-err-str (oyako/insert :tags tag))
          (flash/message "Tag added.")
          (response/redirect "/admin")))))
 
 (defn do-add-category [title url]
   (let [cat {:title title :url url}]
-    (or (validate-tag-category cat)
+    (or (validate-tag-category "/admin/edit-categories" cat)
         (do
-         (error/with-err-str (oyako/insert :categories))
+          (println "INSERT" cat)
+          (error/with-err-str (oyako/insert :categories cat))
+          (println "Inserted")
          (flash/message "Category added.")
          (response/redirect "/admin")))))
 
@@ -421,7 +423,7 @@
 (defn do-edit-category [id title url]
   (let [category (oyako/fetch-one :categories :id id)
         category (assoc category :title title :url url)]
-    (or (validate-tag-category category)
+    (or (validate-tag-category "/admin/edit-categories" category)
         (do
          (error/with-err-str
            (oyako/save ))

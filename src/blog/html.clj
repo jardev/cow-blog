@@ -79,14 +79,14 @@
   renders 'comments' links.  When false, doesn't."
   ([post & {:keys [user front-page?]}]
      [:div.post
-      [:h2.title (link/link post)
+      [:h3.title (link/link post)
        (when user
          [:span.admin
           (layout/status-span post)
-          (link/edit-link post)])]
-      [:div.author
-       (link/link (:category post)) " \u2014 "
-       " by " (:username (:user post)) " on " (time/datestr :pretty (post :date_created))]
+          (link/edit-link post)])
+       [:div.author
+        (link/link (:category post)) " \u2014 "
+        " by " (:username (:user post)) " on " (time/datestr :pretty (post :date_created))]]
       [:div.body
        (post-body post :front-page? front-page?)
        (when-let [parent (:parent post)]

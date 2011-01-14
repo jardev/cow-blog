@@ -17,46 +17,44 @@
      (html
       [:span [:img.rss {:src "/img/rss.png" :alt "RSS"}] " "]))
 
+(defn- nav-title [class x]
+  [:h3 {:class class} x])
+
 (defn- nav [user]
   (let [link-with-count (fn [x]
                           (link-to (link/url x)
                                    (str (:title x) " (" (:num_posts x) ")")))]
-   [:ul
-    [:li
-     (if user
-       [:ul "Hello, " (:username user)
-        [:li (link-to "/logout" "Log out")]
-        [:li (link-to "/admin" "Control Panel")]]
-       [:ul "Log in"
-        [:li (link-to "/login" "Log in")]])]
-    [:li 
-     [:ul "Meta"
-      [:li (link-to "/feed" "RSS")]]]
-    [:li
-     [:ul "Archives"
-      [:li (link-to "/archives/date" "By date")]
-      [:li (link-to "/archives/comments" "Most discussed")]
-      [:li (link-to "/archives/tag-cloud" "Tag Cloud")]]]
-    [:li
-     [:ul "Pages"
-      (map #(vector :li (link/link %))
-           (oyako/fetch-all :posts
-                            :columns [:id :title :url :type :status]
-                            :admin? user
-                            :post-type "toplevel"
-                            :order "title"))]]
-    [:li
-     [:ul "Categories"
+    (list
+     (when user
+       (list
+        (nav-title "admin" "Admin")
+        [:ul "Hello, " (:username user)
+         [:li (link-to "/logout" "Log out")]
+         [:li (link-to "/admin" "Control Panel")]]))
+
+     (nav-title "categories" "Categories")
+     [:ul
       (map #(vector :li (link-with-count %))
            (oyako/fetch-all db/categories
                             :where ["num_posts > 0"]
-                            :order "num_posts desc"))]]
-    [:li
-     [:ul "Tags"
+                            :order "num_posts desc"))]
+
+     (nav-title "tags" "Tags")
+     [:ul
       (map #(vector :li (link-with-count %))
            (oyako/fetch-all db/tags
                             :where ["num_posts > 0"]
-                            :order "num_posts desc"))]]]))
+                            :order "num_posts desc"))]
+
+     (nav-title "archives" "Archives")
+     [:ul
+      [:li (link-to "/archives/date" "By date")]
+      [:li (link-to "/archives/comments" "Most discussed")]
+      [:li (link-to "/archives/tag-cloud" "Tag Cloud")]]
+
+     (nav-title "rssfeed" "Meta")
+     [:ul
+      [:li (link-to "/feed" "RSS-Feeds")]])))
 
 (defn wrap-in-layout [title body user message error]
   (html
@@ -65,27 +63,44 @@
     [:head
      [:title config/SITE-TITLE (when title (str " - " title))]
      (include-css "/css/style.css")
-     (include-css "/css/shCore.css")
-     (include-css "/css/shThemeCow.css")
+     (include-css "/css/shCoreEmacs.css")
+     (include-css "/css/shThemeEmacs.css")
      (include-js "/js/combined.js") ;;magic; look in pages.clj
      [:link {:type "application/rss+xml" :rel "alternate" :href "/feed"}]]
     [:body
      [:div#wrapper
-      (when message [:div.message message])
-      (when error [:div.error error])
-      [:div#header
-       [:h1 (link-to config/SITE-URL config/SITE-TITLE)]
-       [:div.desc (link-to config/SITE-URL config/SITE-DESCRIPTION)]]
+      [:div#main
+       [:div#header
+        [:h2 (link-to config/SITE-URL config/SITE-TITLE)
+         [:span.additional
+          config/SITE-TITLE-ADDITIONAL]]
+        [:span.description config/SITE-DESCRIPTION]
+        [:div#menu
+         [:ul
+          (map #(vector :li (link/link %))
+               (oyako/fetch-all :posts
+                                :columns [:id :title :url :type :status]
+                                :admin? user
+                                :post-type "toplevel"
+                                :order "title"))]]]
+       (when message [:div.message message])
+       (when error [:div.error error])
+       [:div#content
+        [:div.content body]]]
+      [:div#sponsors
+       [:img {:src "/images/lisplogo_fancy_128.png"}]]
       [:div#sidebar (nav user)]
-      [:div#content
-       [:div.content body]]
+
       [:div#footer
-       [:div
+       [:div.footer-text
+        "Written by " (link-to "http://jardev.net" "Yaroslav Luzin aka @jardev")
+        [:br]
         "Powered by "
         (link-to "http://clojure.org" "Clojure") " and "
         (link-to "http://github.com/weavejester/compojure" "Compojure") " and "
-        (link-to "http://briancarper.net" "Cows") "; "
-        "theme based on " (link-to "http://shaheeilyas.com/" "Barecity")"."]]]]]))
+        (link-to "http://github.com/jardev/cow-blog" "Cow-Blog")
+        " originally written by " (link-to "http://briancarper.net" "Brian Carper.")
+        [:br]]]]]]))
 
 (defn preview-div []
   [:div
@@ -138,5 +153,3 @@
 (defn status-span [x]
   (let [status (:status x)]
     [:span " [" [:span {:class status} status] "]"]))
-
-
