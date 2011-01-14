@@ -36,22 +36,48 @@ Clone this git repo, then cd into the directory and:
 
     lein deps
 
-Edit `src/blog/config.clj` to your tastes.
+Create `config_local.clj` and add settings to your tastes. This file will overwrite `src/blog/config.clj` settings.
 
 Look at (and run) `blog.db.postgres.clj/init-db-postgres` to create the tables in your database.
 
 Use `blog.db/create-user` to create an admin user, or you'll never be able to do anything.
 
+To create a database and an admin user:
+
+    $ lein repl
+    user=> (use 'blog/db)
+    user=> (use '[blog.db.postgres :only [init-db-postgres]])
+    user=> (init-db-postgres)
+    user=> (with-db (create-user "user" "password"))
+
 Once your tables are set up, then do this:
 
-    (require 'blog.server)
-    (blog.server/start)
+    make start
+
+This will start the server. If you set DEBUG to true in your configuration file swank will start at the same time. So you can connect with slime and start hacking.
+
+To stop the server run:
+
+    make stop
+
 
 # Deploying
 
-Right now I deploy this by running Emacs in SLIME.  This is less than ideal.  Doing it WAR-style is a possibility in the future.  (Patches welcome.)
+By default deployment scripts are configurable. This will be fixed in the near future. So you have to use path settings from deploy.sh.
 
-I use Apache to proxy to a running Jetty server.  Documentation possibly forthcoming, or read [here](http://briancarper.net/blog/deploying-clojure-websites) for an out-of-date writeup of my general strategy.
+Create folders on your server:
+
+    $ mkdir /opt/blog
+    $ mkdir /opt/blog/tmp
+    $ ln -s /opt/blog/tmp /opt/blog/active
+    $ vi /opt/blog/active/config_local.clj
+
+Set settings in config_local.clj such as HTTP-PORT, database connection settings. Then run from your local machine:
+
+    $ DEPLOYTO=your.host.com make deploy
+
+Set up your main web-server (e.g. nginx) to proxy to 127.0.0.1:8000, where 8000 is the port set in configuration files.
+
 
 ## Bugs
 

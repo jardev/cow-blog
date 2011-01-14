@@ -10,6 +10,7 @@
                   [error :as error]
                   [admin :as admin]
                   [rss :as rss])
+            (swank [swank :as swank])
             (ring.adapter [jetty :as jetty])
             (ring.util [response :as response])
             (sandbar [stateful-session :as session])
@@ -172,4 +173,8 @@
   way to stop Jetty once you start it."
   []
   (future
-    (jetty/run-jetty (var all-routes) {:port config/HTTP-PORT})))
+    (jetty/run-jetty (var all-routes) {:port config/HTTP-PORT
+                                       :host config/HTTP-HOST}))
+  (when config/DEBUG
+    (swank/start-repl))
+  0)

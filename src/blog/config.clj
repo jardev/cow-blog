@@ -1,5 +1,6 @@
 (ns blog.config
   (:import java.io.FileNotFoundException)
+  (:import java.io.File)
   (:require (net.briancarper [postgres-pool :as pg])))
 
 (def DEBUG false)
@@ -27,14 +28,19 @@
 
 (def CAPTCHA #"(?i)^\s*moo\s*$")
 
-(def DB nil)
-
 (def DB (pg/postgres-pool {:database "blog"
                            :username "blog"
                            :password "qwertyuiop"}))
 (def HTTP-PORT 8001)
+(def HTTP-HOST "127.0.0.1")
+
+(defn join-path [& pathes]
+  (reduce (fn [res path] (.toString (File. res path))) pathes))
 
 (try
-  (load "config_local.clj")
+  (load-file "config_local.clj")
   (catch FileNotFoundException e
-    (println "Create config_local.clj")))
+    (try
+      (load-file (join-path (File. *file*) "../../config_local.clj"))
+      (catch FileNotFoundException e
+        (println "Create config_local.clj")))))
