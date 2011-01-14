@@ -16,4 +16,10 @@
                  [lein-daemon "0.2.1"]
                  [sandbar/sandbar "0.2.3"]]
   :dev-dependencies [[swank-clojure "1.2.1"]
-                     [lein-daemon "0.2.1"]])
+                     [lein-daemon "0.2.1"]]
+  :daemon {"server" {:ns "blog.server"
+                     :options {:errfile "cow-blog.log"
+                               :pidfile "cow-blog.pid"
+                               :user "jarik"}}}
+  :jvm-opts ["-Xms8m" "-Xmx64m"])
+

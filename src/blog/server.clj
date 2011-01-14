@@ -9,8 +9,7 @@
                   [config :as config]
                   [error :as error]
                   [admin :as admin]
-                  [rss :as rss]
-                  [css :as css])
+                  [rss :as rss])
             (ring.adapter [jetty :as jetty])
             (ring.util [response :as response])
             (sandbar [stateful-session :as session])
@@ -173,4 +172,4 @@
   way to stop Jetty once you start it."
   []
   (future
-   (jetty/run-jetty (var all-routes) {:port config/HTTP-PORT})))
+    (jetty/run-jetty (var all-routes) {:port config/HTTP-PORT})))

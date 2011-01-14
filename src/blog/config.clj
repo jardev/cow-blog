@@ -10,7 +10,7 @@
 (def SITE-URL "http://localhost:8001")
 
 (def PUBLIC-DIR "public")  ;;CS/JS/images live here.  Relative path.
-(def TIME-ZONE "Ukraine/Kiev")
+(def TIME-ZONE "Europe/Kiev")
 (def TIME-FORMAT "MMMM dd, yyyy @ h:mm a z")
 
 ;; Change this.
