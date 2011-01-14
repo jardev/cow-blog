@@ -22,4 +22,4 @@
                               :pidfile "cow-blog.pid"}}}
   :jvm-opts ["-Xms128m" "-Xmx256m"])
 
-(load "patch-daemon-users.clj")
+(load-file "patch-daemon-users.clj")
