@@ -18,8 +18,8 @@
   :dev-dependencies [[swank-clojure "1.2.1"]
                      [lein-daemon "0.2.1"]]
   :daemon {"server" {:ns "blog.server"
-                     :options {:errfile "cow-blog.log"
-                               :pidfile "cow-blog.pid"
-                               :user "jarik"}}}
-  :jvm-opts ["-Xms8m" "-Xmx64m"])
+                    :options {:errfile "cow-blog.log"
+                              :pidfile "cow-blog.pid"}}}
+  :jvm-opts ["-Xms128m" "-Xmx256m"])
 
+(load "patch-daemon-users.clj")

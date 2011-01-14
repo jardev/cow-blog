@@ -56,51 +56,53 @@
      [:ul
       [:li (link-to "/feed" "RSS-Feeds")]])))
 
-(defn wrap-in-layout [title body user message error]
-  (html
-   (doctype :xhtml-strict)
-   [:html
-    [:head
-     [:title config/SITE-TITLE (when title (str " - " title))]
-     (include-css "/css/style.css")
-     (include-css "/css/shCoreEmacs.css")
-     (include-css "/css/shThemeEmacs.css")
-     (include-js "/js/combined.js") ;;magic; look in pages.clj
-     [:link {:type "application/rss+xml" :rel "alternate" :href "/feed"}]]
-    [:body
-     [:div#wrapper
-      [:div#main
-       [:div#header
-        [:h2 (link-to config/SITE-URL config/SITE-TITLE)
-         [:span.additional
-          config/SITE-TITLE-ADDITIONAL]]
-        [:span.description config/SITE-DESCRIPTION]
-        [:div#menu
-         [:ul
-          (map #(vector :li (link/link %))
-               (oyako/fetch-all :posts
-                                :columns [:id :title :url :type :status]
-                                :admin? user
-                                :post-type "toplevel"
-                                :order "title"))]]]
-       (when message [:div.message message])
-       (when error [:div.error error])
-       [:div#content
-        [:div.content body]]]
-      [:div#sponsors
-       [:img {:src "/images/lisplogo_fancy_128.png"}]]
-      [:div#sidebar (nav user)]
-
-      [:div#footer
-       [:div.footer-text
-        "Written by " (link-to "http://jardev.net" "Yaroslav Luzin aka @jardev")
-        [:br]
-        "Powered by "
-        (link-to "http://clojure.org" "Clojure") " and "
-        (link-to "http://github.com/weavejester/compojure" "Compojure") " and "
-        (link-to "http://github.com/jardev/cow-blog" "Cow-Blog")
-        " originally written by " (link-to "http://briancarper.net" "Brian Carper.")
-        [:br]]]]]]))
+(defn wrap-in-layout
+  ([title body user message error]
+     (wrap-in-layout title body user message error {}))
+  ([title body user message error meta]
+     (html
+      (doctype :xhtml-strict)
+      [:html
+       [:head
+        [:title config/SITE-TITLE (when title (str " - " title))]
+        (include-css "/css/style.css")
+        (include-css "/css/shCoreEmacs.css")
+        (include-css "/css/shThemeEmacs.css")
+        (include-js "/js/combined.js") ;;magic; look in pages.clj
+        [:link {:type "application/rss+xml" :rel "alternate" :href "/feed"}]]
+       [:body
+        [:div#wrapper
+         [:div#main
+          [:div#header
+           [:h2 (link-to config/SITE-URL config/SITE-TITLE)
+            [:span.additional
+             config/SITE-TITLE-ADDITIONAL]]
+           [:span.description config/SITE-DESCRIPTION]
+           [:div#menu
+            [:ul
+             (map #(vector :li (link/link %))
+                  (oyako/fetch-all :posts
+                                   :columns [:id :title :url :type :status]
+                                   :admin? user
+                                   :post-type "toplevel"
+                                   :order "title"))]]]
+          (when message [:div.message message])
+          (when error [:div.error error])
+          [:div#content
+           [:div.content body]]]
+         [:div#sponsors
+          [:img {:src "/images/lisplogo_fancy_128.png"}]]
+         [:div#sidebar (nav user)]
+         [:div#footer
+          [:div.footer-text
+           "Written by " (link-to "http://jardev.net" "Yaroslav Luzin aka @jardev")
+           [:br]
+           "Powered by "
+           (link-to "http://clojure.org" "Clojure") " and "
+           (link-to "http://github.com/weavejester/compojure" "Compojure") " and "
+           (link-to "http://github.com/jardev/cow-blog" "Cow-Blog")
+           " originally written by " (link-to "http://briancarper.net" "Brian Carper.")
+           [:br]]]]]])))
 
 (defn preview-div []
   [:div

@@ -7,7 +7,7 @@
 (def SITE-TITLE "Yaroslav Luzin himself")
 (def SITE-TITLE-ADDITIONAL "aka @jardev")
 (def SITE-DESCRIPTION "Clojure. Software development. Project management")
-(def SITE-URL "http://localhost:8001")
+(def SITE-URL "http://127.0.0.1:8001")
 
 (def PUBLIC-DIR "public")  ;;CS/JS/images live here.  Relative path.
 (def TIME-ZONE "Europe/Kiev")
@@ -32,7 +32,7 @@
 (def DB (pg/postgres-pool {:database "blog"
                            :username "blog"
                            :password "qwertyuiop"}))
-(def HTTP-PORT 8000)
+(def HTTP-PORT 8001)
 
 (try
   (load "config_local.clj")
