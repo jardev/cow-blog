@@ -136,25 +136,31 @@
                " "])
             )]})
 
+(def combined-js-cache (atom nil))
+
 (defn combined-js
   "Render Javascript files by reading them from disk and concat'ing them
   together into one blob of text.  This saves the user from needed one HTTP
   request per JS file."
   []
+  (when-not @combined-js-cache
+     (swap! combined-js-cache
+            (fn [_]
+              (apply str (mapcat #(slurp (s/join "/" [config/PUBLIC-DIR "js" (str % ".js")]))
+                                 ["xregexp" "shCore"
+                                  "brushes/shBrushBash"
+                                  "brushes/shBrushClojure"
+                                  "brushes/shBrushCss"
+                                  "brushes/shBrushJava"
+                                  "brushes/shBrushPerl"
+                                  "brushes/shBrushPhp"
+                                  "brushes/shBrushPython"
+                                  "brushes/shBrushRuby"
+                                  "brushes/shBrushSql"
+                                  "brushes/shBrushXml"
+                                  "jquery" "typewatch" "showdown" "editor"])))))
   {:headers {"Content-Type" "text/javascript;charset=UTF-8"}
-   :body (apply str (mapcat #(slurp (s/join "/" [config/PUBLIC-DIR "js" (str % ".js")]))
-                            ["xregexp" "shCore"
-                             "brushes/shBrushBash"
-                             "brushes/shBrushClojure"
-                             "brushes/shBrushCss"
-                             "brushes/shBrushJava"
-                             "brushes/shBrushPerl"
-                             "brushes/shBrushPhp"
-                             "brushes/shBrushPython"
-                             "brushes/shBrushRuby"
-                             "brushes/shBrushSql"
-                             "brushes/shBrushXml"
-                             "jquery" "typewatch" "showdown" "editor"]))})
+   :body @combined-js-cache})
 
 
 (defn do-add-comment
@@ -189,7 +195,7 @@
                                      (Anti-robot defense systems activated.)"
                                 "Comment added.  Thanks!"))
                (response/redirect referer)
-                   
+
                (catch Exception e
                  (throw e)
                  (error/redirect-and-error referer

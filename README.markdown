@@ -1,4 +1,8 @@
-# cow-blog 0.2.0
+# Overview
+
+This a fork of cow-blog - a blog engine written by Brian Carper.
+
+## cow-blog 0.2.0
 by [Brian Carper](http://briancarper.net/)
 
 This is a(nother) complete rewrite of my blog engine, written in Clojure using Compojure and PostgreSQL.

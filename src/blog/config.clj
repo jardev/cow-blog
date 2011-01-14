@@ -1,4 +1,5 @@
 (ns blog.config
+  (:import java.io.FileNotFoundException)
   (:require (net.briancarper [postgres-pool :as pg])))
 
 (def DEBUG false)
@@ -9,7 +10,7 @@
 (def SITE-URL "http://localhost:8001")
 
 (def PUBLIC-DIR "public")  ;;CS/JS/images live here.  Relative path.
-(def TIME-ZONE "Canada/Pacific")
+(def TIME-ZONE "Ukraine/Kiev")
 (def TIME-FORMAT "MMMM dd, yyyy @ h:mm a z")
 
 ;; Change this.
@@ -31,22 +32,9 @@
 (def DB (pg/postgres-pool {:database "blog"
                            :username "blog"
                            :password "qwertyuiop"}))
+(def HTTP-PORT 8000)
 
-;; Pick a DB...
-(comment
-  ;;Postgres pool, uses net.briancarper.postgres-pool from Clojars
-  (def DB (pg/postgres-pool {:database "blogtest"
-                             :username "blogtest"
-                             :password "blogtest"}))
-
-  ;; Normal single-connection postgres
-  (def DB {:classname "org.postgresql.Driver"
-           :subprotocol "postgresql"
-           :subname "//localhost/blogtest"
-           :username "blogtest"
-           :password "blogtest"})
-
-  ;; MySQL
-  (def DB {:classname "com.mysql.jdbc.Driver"
-           :subprotocol "mysql"
-           :subname "//localhost/blog?user=blogtest&password=blogtest"}))
+(try
+  (load "config_local.clj")
+  (catch FileNotFoundException e
+    (println "Create config_local.clj")))

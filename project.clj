@@ -1,4 +1,4 @@
-(defproject cow-blog "0.2.0-jardev"
+(defproject cow-blog "0.2.1"
   :description "Brian Carper's cow-blog fork by @jardev"
   :url "http://github.com/jardev/cow-blog"
   :dependencies [[org.clojure/clojure "1.2.0"]
@@ -13,5 +13,7 @@
                  [postgres-pool "1.1.0"]
                  [joda-time "1.6"]
                  [rhino/js "1.7R2"]
+                 [lein-daemon "0.2.1"]
                  [sandbar/sandbar "0.2.3"]]
-  :dev-dependencies [[swank-clojure "1.2.1"]])
+  :dev-dependencies [[swank-clojure "1.2.1"]
+                     [lein-daemon "0.2.1"]])

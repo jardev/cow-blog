@@ -53,6 +53,7 @@ textarea {
    	border: 1px solid #939393;
    	padding: 2px;
    	font-size: 1.0em;
+    margin-top: 4px;
 }
 
 blockquote {
@@ -452,11 +453,11 @@ h1, h2, h3 {
 }
 
 #content #comments .test {
-    text-align: right;
+    text-align: center;
 }
 
 #content #comments .test img {
-        vertical-align: middle;
+    vertical-align: middle;
 }
 
 #content #comments input#test {

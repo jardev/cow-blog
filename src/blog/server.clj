@@ -173,4 +173,4 @@
   way to stop Jetty once you start it."
   []
   (future
-   (jetty/run-jetty (var all-routes) {:port 8001})))
+   (jetty/run-jetty (var all-routes) {:port config/HTTP-PORT})))
