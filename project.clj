@@ -1,4 +1,4 @@
-(defproject cow-blog "0.2.3"
+(defproject cow-blog "0.2.4"
   :description "Brian Carper's cow-blog fork by @jardev"
   :url "http://github.com/jardev/cow-blog"
   :dependencies [[org.clojure/clojure "1.2.0"]
