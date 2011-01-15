@@ -63,7 +63,7 @@ To stop the server run:
 
 # Deploying
 
-By default deployment scripts are configurable. This will be fixed in the near future. So you have to use path settings from deploy.sh.
+By default deployment scripts are not configurable. This will be fixed in the near future. So you have to use path settings from deploy.sh.
 
 Create folders on your server:
 
