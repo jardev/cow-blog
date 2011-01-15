@@ -3,7 +3,7 @@
   (:import java.io.File)
   (:require (net.briancarper [postgres-pool :as pg])))
 
-(def DEBUG false)
+(def DEBUG true)
 
 (def SITE-TITLE "Yaroslav Luzin himself")
 (def SITE-TITLE-ADDITIONAL "aka @jardev")

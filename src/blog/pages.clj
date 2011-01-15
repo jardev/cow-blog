@@ -147,18 +147,20 @@
      (swap! combined-js-cache
             (fn [_]
               (apply str (mapcat #(slurp (s/join "/" [config/PUBLIC-DIR "js" (str % ".js")]))
-                                 ["xregexp" "shCore"
-                                  "brushes/shBrushBash"
-                                  "brushes/shBrushClojure"
-                                  "brushes/shBrushCss"
-                                  "brushes/shBrushJava"
-                                  "brushes/shBrushPerl"
-                                  "brushes/shBrushPhp"
-                                  "brushes/shBrushPython"
-                                  "brushes/shBrushRuby"
-                                  "brushes/shBrushSql"
-                                  "brushes/shBrushXml"
-                                  "jquery" "typewatch" "showdown" "editor"])))))
+                                 (concat
+                                  ["xregexp" "shCore"
+                                   "brushes/shBrushBash"
+                                   "brushes/shBrushClojure"
+                                   "brushes/shBrushCss"
+                                   "brushes/shBrushJava"
+                                   "brushes/shBrushPerl"
+                                   "brushes/shBrushPhp"
+                                   "brushes/shBrushPython"
+                                   "brushes/shBrushRuby"
+                                   "brushes/shBrushSql"
+                                   "brushes/shBrushXml"
+                                   "jquery" "typewatch" "showdown" "editor"]
+                                  (when-not config/DEBUG ["ga"])))))))
   {:headers {"Content-Type" "text/javascript;charset=UTF-8"}
    :body @combined-js-cache})
 
