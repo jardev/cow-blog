@@ -143,24 +143,23 @@
   together into one blob of text.  This saves the user from needed one HTTP
   request per JS file."
   []
-  (when-not @combined-js-cache
+  (when-not (or @combined-js-cache
+                config/DEBUG)
      (swap! combined-js-cache
             (fn [_]
               (apply str (mapcat #(slurp (s/join "/" [config/PUBLIC-DIR "js" (str % ".js")]))
-                                 (concat
-                                  ["xregexp" "shCore"
-                                   "brushes/shBrushBash"
-                                   "brushes/shBrushClojure"
-                                   "brushes/shBrushCss"
-                                   "brushes/shBrushJava"
-                                   "brushes/shBrushPerl"
-                                   "brushes/shBrushPhp"
-                                   "brushes/shBrushPython"
-                                   "brushes/shBrushRuby"
-                                   "brushes/shBrushSql"
-                                   "brushes/shBrushXml"
-                                   "jquery" "typewatch" "showdown" "editor"]
-                                  (when-not config/DEBUG ["ga"])))))))
+                                 ["xregexp" "shCore"
+                                  "brushes/shBrushBash"
+                                  "brushes/shBrushClojure"
+                                  "brushes/shBrushCss"
+                                  "brushes/shBrushJava"
+                                  "brushes/shBrushPerl"
+                                  "brushes/shBrushPhp"
+                                  "brushes/shBrushPython"
+                                  "brushes/shBrushRuby"
+                                  "brushes/shBrushSql"
+                                  "brushes/shBrushXml"
+                                  "jquery" "typewatch" "showdown" "editor"])))))
   {:headers {"Content-Type" "text/javascript;charset=UTF-8"}
    :body @combined-js-cache})
 

@@ -1,5 +1,12 @@
+(ns blog.ga
+  "Contains functions to generate Google Analytics JS-Script"
+  (:require (blog [config :as config])))
+
+
+(def GA-SCRIPT "
+<script type=\"text/javascript\">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-20767612-1']);
+  _gaq.push(['_setAccount', '%s']);
   _gaq.push(['_trackPageview']);
 
   (function() {
@@ -7,3 +14,8 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+")
+
+(defn ga []
+  (when config/GA-ACCOUNT
+    (format GA-SCRIPT config/GA-ACCOUNT)))

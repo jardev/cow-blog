@@ -3,6 +3,7 @@
   (:import java.io.File)
   (:require (net.briancarper [postgres-pool :as pg])))
 
+
 (def DEBUG true)
 
 (def SITE-TITLE "Yaroslav Luzin himself")
@@ -34,6 +35,10 @@
 (def HTTP-PORT 8001)
 (def HTTP-HOST "127.0.0.1")
 
+;; Specify your Google Analytics Account
+(def GA-ACCOUNT nil)
+
+;; Load config_local.clj
 (defn join-path [& pathes]
   (reduce (fn [res path] (.toString (File. res path))) pathes))
 
