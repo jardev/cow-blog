@@ -33,7 +33,7 @@
                            :username "blog"
                            :password "qwertyuiop"}))
 (def HTTP-PORT 8001)
-(def HTTP-HOST "127.0.0.1")
+(def HTTP-HOST "0.0.0.0")
 
 ;; Specify your Google Analytics Account
 (def GA-ACCOUNT nil)

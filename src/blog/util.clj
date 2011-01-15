@@ -1,5 +1,12 @@
 (ns blog.util
+  (:import (java.net URL URLEncoder))
   (:require (clojure.contrib [string :as s])))
+
+(defn url-encode
+  "Wrapper around java.net.URLEncoder returning a (UTF-8) URL encoded
+representation of text."
+  [text]
+  (URLEncoder/encode text "UTF-8"))
 
 (defn die [& xs]
   (throw (Exception. (apply str xs))))
@@ -10,7 +17,7 @@
     (when (not (empty? x))
       (Integer/parseInt x))))
 
-(comment 
+(comment
  (defn now []
    (.getTime (java.util.Calendar/getInstance)))
 

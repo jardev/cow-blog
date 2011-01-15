@@ -9,6 +9,8 @@
             (blog [layout :as layout]
                   [link :as link]
                   [time :as time]
+                  [util :as util]
+                  [config :as config]
                   [error :as error]
                   [db :as db])))
 
@@ -74,6 +76,14 @@
                (link-to (link/url post) message)])))
     (post :html)))
 
+(defn- facebook-like-button [uri]
+  (format (str "<iframe src=\"http://www.facebook.com/plugins/like.php?href="
+               "%s"
+               "&amp;layout=button_count&amp;show_faces=true&amp;width=125&amp;action=like&amp;"
+               "colorscheme=dark\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\" "
+               "style=\"border:none; overflow:hidden; width:125px; height:px\"></iframe>")
+          (util/url-encode (format "%s%s" config/SITE-URL uri))))
+
 (defn- render-post*
   "Render a post as HTML, including title, metadata etc.  When :front-page? is true,
   renders 'comments' links.  When false, doesn't."
@@ -97,7 +107,10 @@
        (when front-page?
          [:div.comments-link
           (link/comments-link post)])
-       ]]))
+       [:div.like-actions
+        (facebook-like-button (link/url post))]
+       ]
+]))
 
 (defn render-index [posts & {:keys [user page-number count]}]
   (layout/render-paginated posts

@@ -57,6 +57,8 @@
      [:ul
       [:li (link-to "/feed" "RSS-Feeds")]])))
 
+
+
 (defn wrap-in-layout
   ([title body user message error]
      (wrap-in-layout title body user message error {}))
