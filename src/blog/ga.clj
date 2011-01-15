@@ -16,6 +16,6 @@
   })();
 ")
 
-(defn ga []
+(defn ga-script []
   (when config/GA-ACCOUNT
     (format GA-SCRIPT config/GA-ACCOUNT)))

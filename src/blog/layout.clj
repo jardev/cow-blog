@@ -4,6 +4,7 @@
   (:require (blog [config :as config]
                   [util :as util]
                   [db :as db]
+                  [ga :as ga]
                   [link :as link])
             (oyako [core :as oyako])
             (clojure.contrib [math :as math]
@@ -102,7 +103,8 @@
            (link-to "http://github.com/weavejester/compojure" "Compojure") " and "
            (link-to "http://github.com/jardev/cow-blog" "Cow-Blog")
            " originally written by " (link-to "http://briancarper.net" "Brian Carper.")
-           [:br]]]]]])))
+           [:br]]]]
+        (ga/ga-script)]])))
 
 (defn preview-div []
   [:div
