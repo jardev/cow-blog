@@ -77,17 +77,31 @@
     (post :html)))
 
 (defn- facebook-like-button [uri]
-  [:iframe {:src (str "http://www.facebook.com/plugins/like.php?href="
-                      (util/url-encode (format "%s%s" config/SITE-URL uri))
-                      "&layout=button_count"
-                      "&show_faces=true"
-                      "&width=125"
-                      "&action=like"
-                      "&colorscheme=dark")
-            :scrolling "no"
-            :frameborder "0"
-            :allowTransparency "true"
-            :style "border:none; overflow:hidden; width:125px; height:24px"} nil])
+  [:span.facebook-like-button
+   [:iframe {:src (str "http://www.facebook.com/plugins/like.php?href="
+                       (util/url-encode (format "%s%s" config/SITE-URL uri))
+                       "&layout=button_count"
+                       "&show_faces=true"
+                       "&width=125"
+                       "&action=like"
+                       "&colorscheme=light")
+             :scrolling "no"
+             :frameborder "0"
+             :allowTransparency "true"
+             :style "border:none; overflow:hidden; width:100px; height:20px"} nil]])
+
+(defn- retweet-button [uri]
+  [:div.tweetmeme-button
+   [:iframe {:src (str "http://api.tweetmeme.com/button.js?url="
+                       (util/url-encode (format "%s%s" config/SITE-URL uri))
+                       "&source=" config/RETWEET-ACCOUNT
+                       "&style=compact"
+                       "&service=bit.ly"
+                       "&service_api=R_b26c3be05b957ebb27d168d5bbafe330&amp;b=2")
+             :width "90px"
+             :scrolling "no"
+             :height "20px"
+             :frameborder "0"} nil]])
 
 (defn- render-post*
   "Render a post as HTML, including title, metadata etc.  When :front-page? is true,
@@ -107,8 +121,10 @@
        (when-let [parent (:parent post)]
          [:div.parent "This post is related to " (link/link parent)])]
       [:div.meta
-       [:div.like-actions
-        (facebook-like-button (link/url post))]
+       [:span.share-links
+        (retweet-button (link/url post))
+        (facebook-like-button (link/url post))
+        [:div.clear]]
        (when (post :tags)
          [:div.tags "Tags: " (interpose ", " (map link/link (post :tags)))])
        (when front-page?

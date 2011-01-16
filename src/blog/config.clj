@@ -37,6 +37,8 @@
 ;; Specify your Google Analytics Account
 (def GA-ACCOUNT nil)
 
+(defn RETWEET-ACCOUNT "tweetmeme")
+
 ;; Load config_local.clj
 (defn join-path [& pathes]
   (reduce (fn [res path] (.toString (File. res path))) pathes))

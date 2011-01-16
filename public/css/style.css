@@ -175,11 +175,20 @@ h1, h2, h3 {
     color: #ebf;
 }
 
-.like-actions {
-    height:18px;
-    margin:0 auto;
-    padding:0;
+/* Share links like Retweet and Like */
+.share-links {
+    height:30px;
     float:left;
+}
+
+.tweetmeme-button {
+    float: right;
+    margin: 7px -10px 0 10px;
+}
+
+.facebook-like-button {
+    float: right;
+    margin: 5px -10px 0 10px;
 }
 
 #menu {
