@@ -552,13 +552,13 @@ h1, h2, h3 {
 }
 
 #sidebar h3 {
-	font-size:18px;
+	font-size:16px;
 	margin:2px;
     color:#fff;
     width:238px;
     height:35px;
     padding-left:11px;
-    padding-top:3px;
+    padding-top:5px;
 }
 
 #sidebar ul {
