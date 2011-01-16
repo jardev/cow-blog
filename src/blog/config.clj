@@ -37,7 +37,7 @@
 ;; Specify your Google Analytics Account
 (def GA-ACCOUNT nil)
 
-(defn RETWEET-ACCOUNT "tweetmeme")
+(def RETWEET-ACCOUNT "tweetmeme")
 
 ;; Load config_local.clj
 (defn join-path [& pathes]

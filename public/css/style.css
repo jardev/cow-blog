@@ -191,6 +191,11 @@ h1, h2, h3 {
     margin: 5px -10px 0 10px;
 }
 
+.reddit-button {
+    float:right;
+    margin: 5px 0 0 5px;
+}
+
 #menu {
     height:28px;
 	margin:0 auto;

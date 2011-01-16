@@ -92,16 +92,23 @@
 
 (defn- retweet-button [uri]
   [:div.tweetmeme-button
-   [:iframe {:src (str "http://api.tweetmeme.com/button.js?url="
-                       (util/url-encode (format "%s%s" config/SITE-URL uri))
-                       "&source=" config/RETWEET-ACCOUNT
-                       "&style=compact"
-                       "&service=bit.ly"
-                       "&service_api=R_b26c3be05b957ebb27d168d5bbafe330&amp;b=2")
-             :width "90px"
-             :scrolling "no"
-             :height "20px"
-             :frameborder "0"} nil]])
+   [:script {:type "text/javascript"}
+    "tweetmeme_url='" config/SITE-URL uri "';"
+    "tweetmeme_style = 'compact';"
+    "tweetmeme_source = '" config/RETWEET-ACCOUNT "';"]
+   [:script {:type "text/javascript"
+             :src "http://tweetmeme.com/i/scripts/button.js"}
+    nil]])
+
+
+(defn- reddit-button [title uri]
+  [:div.reddit-button
+   [:script {:type "text/javascript"}
+    "reddit_url = '" (format "%s%s" config/SITE-URL uri) "';"
+    "reddit_title = '" title "';"]
+   [:script {:type "text/javascript"
+             :src "http://reddit.com/static/button/button1.js"}
+    nil]])
 
 (defn- render-post*
   "Render a post as HTML, including title, metadata etc.  When :front-page? is true,
@@ -124,6 +131,7 @@
        [:span.share-links
         (retweet-button (link/url post))
         (facebook-like-button (link/url post))
+        (reddit-button (:title post) (link/url post))
         [:div.clear]]
        (when (post :tags)
          [:div.tags "Tags: " (interpose ", " (map link/link (post :tags)))])
