@@ -7,7 +7,6 @@
 (def DEBUG true)
 
 (def SITE-TITLE "Yaroslav Luzin himself")
-(def SITE-TITLE-ADDITIONAL "aka @jardev")
 (def SITE-DESCRIPTION "Clojure. Software development. Project management")
 (def SITE-URL "http://127.0.0.1:8001")
 

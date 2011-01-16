@@ -77,9 +77,7 @@
         [:div#wrapper
          [:div#main
           [:div#header
-           [:h2 (link-to config/SITE-URL config/SITE-TITLE)
-            [:span.additional
-             config/SITE-TITLE-ADDITIONAL]]
+           [:h2 (link-to config/SITE-URL config/SITE-TITLE)]
            [:span.description config/SITE-DESCRIPTION]
            [:div#menu
             [:ul
@@ -98,7 +96,7 @@
          [:div#sidebar (nav user)]
          [:div#footer
           [:div.footer-text
-           "Written by " (link-to "http://jardev.net" "Yaroslav Luzin aka @jardev")
+           "Written by " (link-to "http://jardev.net" "Yaroslav Luzin")
            [:br]
            "Powered by "
            (link-to "http://clojure.org" "Clojure") " and "
