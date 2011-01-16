@@ -77,12 +77,17 @@
     (post :html)))
 
 (defn- facebook-like-button [uri]
-  (format (str "<iframe src=\"http://www.facebook.com/plugins/like.php?href="
-               "%s"
-               "&amp;layout=button_count&amp;show_faces=true&amp;width=125&amp;action=like&amp;"
-               "colorscheme=dark\" scrolling=\"no\" frameborder=\"0\" allowTransparency=\"true\" "
-               "style=\"border:none; overflow:hidden; width:125px; height:px\"></iframe>")
-          (util/url-encode (format "%s%s" config/SITE-URL uri))))
+  [:iframe {:src (str "http://www.facebook.com/plugins/like.php?href="
+                      (util/url-encode (format "%s%s" config/SITE-URL uri))
+                      "&layout=button_count"
+                      "&show_faces=true"
+                      "&width=125"
+                      "&action=like"
+                      "&colorscheme=dark")
+            :scrolling "no"
+            :frameborder "0"
+            :allowTransparency "true"
+            :style "border:none; overflow:hidden; width:125px; height:24px"} nil])
 
 (defn- render-post*
   "Render a post as HTML, including title, metadata etc.  When :front-page? is true,
