@@ -179,8 +179,7 @@ h1, h2, h3 {
     height:18px;
     margin:0 auto;
     padding:0;
-    text-align:right;
-    margin-top:3px;
+    float:left;
 }
 
 #menu {

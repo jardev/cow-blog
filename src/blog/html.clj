@@ -102,13 +102,14 @@
        (when-let [parent (:parent post)]
          [:div.parent "This post is related to " (link/link parent)])]
       [:div.meta
+       [:div.like-actions
+        (facebook-like-button (link/url post))]
        (when (post :tags)
          [:div.tags "Tags: " (interpose ", " (map link/link (post :tags)))])
        (when front-page?
          [:div.comments-link
           (link/comments-link post)])
-       [:div.like-actions
-        (facebook-like-button (link/url post))]
+
        ]
 ]))
 
